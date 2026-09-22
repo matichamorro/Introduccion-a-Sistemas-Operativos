@@ -444,14 +444,156 @@ Tocando `Esc` para salir de modo Inserción y luego escribiendo `:wq`, guardamos
 tail isocso.txt
 ```
 
-### 11. Investigue el objetivo, parámetros  y ubicación (directorio) de los siguientes comandos:  
-1. man 
-2. shutdown  
-3. reboot  
-4. halt 
-5. name 
-6. dmesg 
-7. lspci 
-8. at 
-9. head  
-10. tail 
+### 11. Investigue el objetivo, parámetros y ubicación (directorio) de los siguientes comandos:  
+1. `man` (_Manual_): Despliega el manual de usuario completo de cualquier comando del sistema, detallando su uso, sintaxis y funcionamiento interno.
+    - `man [sección 1-9] [comando]`: Abre una sección específica del manual. Ejemplo `man 5 passwd` para el formato del archivo de `passwd`.
+    - `man -k [palabra_clave]`: Busca la palabra clave en las descripciones cortas de todos los manuales. Essimilar a `apropos`.  
+    **Ubicación**: `/usr/bin/man`
+2. `shutdown`: Apaga o reinicia el sistema de forma segura, cerrando procesos ordenadamente y notificando a los usuarios conectados.
+    - `shutdown -h` (*halt / poweroff*): Detiene el sistema y corta la energía.
+    - `shutdown -r` (*reboot*): Reinicia el sistema .
+    - `shutdown -c`: Cancela un apagado que ya había sido programado.
+    - `shutdown [tiempo]`: Define cuándo ejecutarlo. Ejemplo: `now` para inmediato, `+5` para dentro de 5 minutos, `23:00` para una hora específica.  
+    **Ubicación**: `/usr/sbin/shutdown` (Es un enlace simbólico a `systemctl`).
+3. `reboot`: Reinicia el sistema operativo.
+    - `reboot -f` (*force*): Fuerza el reinicio inmediato sin invocar el apagado seguro de procesos (*peligroso para los datos*).
+    - `reboot -p` (*poweroff*): Apaga la máquina en lugar de reiniciarla.  
+    **Ubicación**: `/usr/sbin/reboot`
+4. `halt`: (_runlevel 0_) Detiene todas las funciones del procesador.
+    - `halt -f` (*force*): Detiene el sistema violentamente sin sincronizar discos.
+    - `halt -p` (*poweroff*): Corta la energía tras detener el sistema.  
+    **Ubicación**: `/usr/sbin/halt`
+5. `uname`: Imprime información fundamental sobre el sistema operativo, la arquitectura del hardware y la versión del Kernel.
+    - `uname -a` (*all*): Muestra toda la información disponible.
+    - `uname -r` (*release*): Muestra únicamente la versión exacta del Kernel.
+    - `uname -n` (*nodename*): Muestra el nombre de la máquina en la red.  
+    **Ubicación**: `/usr/bin/uname`
+6. `dmesg` (_Display Message_ o _Driver Message_): Muestra el *ring buffer* del Kernel. Es decir, imprime todos los mensajes generados por el núcleo durante el proceso de arranque (*POST* de hardware, carga de drivers, discos detectados). 
+    - `dmesg -T` (*human-readable timestamps*): Convierte los tiempos de los mensajes a un formato de fecha y hora legible.
+    - `dmesg -c` (*clear*): Muestra el contenido del buffer y luego lo borra.
+    - `dmesg -w` (*follow*): Mantiene la salida abierta esperando nuevos mensajes de hardware en tiempo real.  
+    **Ubicación**: `/usr/bin/dmesg`
+7. `lspci` (_List PCI_): Muestra una lista detallada de todos los dispositivos conectados a los buses PCI y PCIe de la placa base (tarjetas de red, tarjetas de video, controladores de almacenamiento).
+    - `lspci -v` (*verbose*): Muestra detalles adicionales sobre cada dispositivo.
+    - `lspci -vv`: Muestra **toda** la información técnica disponible.
+    - `lspci -k`: Muestra qué módulo (*driver*) del Kernel está administrando actualmente a cada dispositivo.  
+    **Ubicación**: `/usr/bin/lspci`
+8. `at`: Programa la ejecución de un comando o un script para que se ejecute una sola vez en un momento específico del futuro (a diferencia de `cron`, que es para tareas recurrentes).
+    - `at -l`: Lista los trabajos que están encolados esperando ejecutarse (es un alias del comando `atq`).
+    - `at -r [ID]`: Elimina un trabajo de la cola usando su número de ID (es un alias de `atrm`).
+    - `at -f [archivo]`: Lee los comandos a ejecutar desde un archivo de texto en lugar de la entrada estándar.  
+    **Ubicación**: `/usr/bin/at` (en máquinas virtuales limpias a veces no viene instalado, se instala con `sudo apt install at`)
+9. `head`: Muestra en pantalla el comienzo de un archivo de texto (por defecto, las primeras 10 líneas).
+    - `head -n [número]`: Define la cantidad exacta de líneas a mostrar desde el principio.
+    - `head -c [número]`: Muestra una cantidad específica de bytes en lugar de líneas.  
+    **Ubicación**: `/usr/bin/head`
+10. `tail`: Muestra por pantalla la parte final de un archivo de texto (por defecto, las últimas 10 líneas).
+    - `tail -n [número]`: Especifica la cantidad exacta de líneas a mostrar. Ejemplo: `tail -n 20 archivo.txt`.
+    - `tail -f` (*follow*): Mantiene el archivo abierto y muestra en tiempo real las nuevas líneas que se van agregando. Es una herramienta fundamental para, por ejemplo, monitorear archivos de registro (logs).  
+    **Ubicación**: `/usr/bin/tail`
+
+### 12. Proceso de Arranque SystemV :  
+#### 1. Enumere los pasos del proceso de inicio de un sistema GNU/Linux, desde que se prende la PC hasta que se logra obtener el login en el sistema.  
+1. Se empieza a ejecutar el código del BIOS.
+2. El BIOS ejecuta el POST.
+3. El BIOS lee el sector de arranque (MBR).
+4. Se carga el gestor de arranque (MBC).
+5. El bootloader carga el kernel y el initrd (initial ram disk).
+6. Se monta el initrd como sistema de archivos raíz y se inicializan componentes esenciales (por ejemplo, el scheduler).
+7. El Kernel ejecuta el proceso init y se desmonta el initrd.
+8. Se lee el /etc/inittab.
+9. Se ejecutan los scripts apuntados por el runlevel 1.
+10. El final del runlevel 1 le indica que vaya al runlevel por defecto.
+11. Se ejecutan los scripts apuntados por el runlevel por defecto.
+12. El sistema está listo para ser usado.
+
+#### 2. Proceso INIT. ¿Quién lo ejecuta? ¿Cuál es su objetivo? 
+El proceso `init` es ejecutado por el Kernel. En SysV init, se lo configura a través del archivo `/etc/inittab`.  
+Su función es cargar todos los subprocesos necesarios para el correcto funcionamiento del sistema operativo.  
+El proceso init (ejecutado desde `/sbin/init`) posee el PID 1, no tiene padre y es el padre de todos los procesos (**pstree**).  
+Es el encargado de montar los filesystems y de hacer disponible los demás dispositivos.
+
+#### 3. RunLevels. ¿Qué son? ¿Cuál es su objetivo?  
+El proceso de arranque se divide en niveles o *runlevels*. Cada runlevel es **responsable de iniciar o parar una serie de servicios**, ya sea al entrar al Runlevel (*arranque*) o al salir de éste (*apagado*). Acorde al estándar, existen 7 (numerados del 0 al 6) y se encuentra definido cuáles deben ejecutarse en el archivo `/etc/inittab`. Por otro lado, es en `/etc/init.d` donde se guardan los scripts a ejecutar.
+
+
+#### 4. ¿A qué hace referencia cada nivel de ejecución según el estándar? ¿Dónde se define qué Runlevel ejecutar al iniciar el sistema operativo? ¿Todas las distribuciones respetan estos estándares?  
+Acorde al estándar, existen 7 Runlevels, numerados del 0 al 6:  
+<ol start="0">
+<li>halt (*parada o apagado*).</li>
+<li>single-user mode (*modo monousuario*).</li>
+<li>multi-user without network support (*multiusuario sin soporte de red*).</li>
+<li>multi-user console mode (*modo multiusuario en consola*).</li>
+<li>N/A (no se utiliza).</li>
+<li>X11 (*modo multiusuario con entorno gráfico basado en X.org*).</li>
+<li>reboot (*reinicio*)  </li>
+</ol>
+Los Runlevels son definidos en el archivo `/etc/inittab`. No en todas las distribuciones de GNU/Linux se usa el mismo Runlevel para arrancar el sistema operativo, por ejemplo: por defecto es Runlevel 3 en Redhat y Runlevel 2 en Debian.
+
+#### 5. Archivo /etc/inittab. ¿Cuál es su finalidad? ¿Qué tipo de información se almacena en el? ¿Cuál es la estructura de la información que en él se almacena?  
+Una vez que el Kernel ejecuta el proceso init y se desmonta el initrd, se ejecutan los Runlevels empezando por el 1. Estos que se encuentran definidos en el archivo `/etc/inittab` de la siguiente forma:  
+`id:runlevels:acción:proceso`  
+- *id*: identifica la entrada en inittab (1 a 4 caracteres).
+- *runlevels*: el/los runlevels en los que se realiza la acción.
+- *acción*: indica cómo se ejecutará proceso wait, initdefault, ctrlaltdel, off, respawn, once, sysinit, boot, bootwait, powerwait, etc.
+- *proceso*: el comando exacto que será ejecutado.
+
+#### 6. Suponga que se encuentra en el runlevel `X`. Indique qué comando(s) deberá ejecutar para cambiar al runlevel `Y`. ¿Este cambio es permanente? ¿Por qué?  
+Si estamos en un `runlevel X` y busco pasar al `runlevel Y`, el comando estándar a ejecutar es el siguiente como administrador (root) es:
+```bash
+init Y
+```
+
+Por ejemplo, se puede cambiar al runlevel 3 (*modo texto multiusuario*) ejecutando `init 3`, o apagar el equipo manualmente, puedes ejecutar `init 0`.  
+Esto no es permanente, ya que solo afecta a la sesión de trabajo actual que se encuentra cargada en la memoria RAM. Esto es porque el sistema operativo, en el proceso de bootstrap, lee el archivo de configuración alojado en `/etc/inittab` para averiguar cuál es el estado (Runlevel) predeterminado. Al ejecutar el comando `init Y`, se obliga al Kernel a cambiar de estado en ese momento, pero no se modifica `/etc/inittab`. Al reiniciar la computadora, el sistema volverá a leerlo y arrancará en el Runlevel predeterminado original.
+
+
+#### 7. Scripts RC. ¿Cuál es su finalidad? ¿Dónde se almacenan? Cuando un sistema GNU/Linux arranca o se detiene se ejecutan scripts, indique cómo determina qué script ejecutar ante cada acción. ¿Existe un orden para llamarlos? Justifique.  
+Los scripts RC son pequeños archivos de texto ejecutables (programados en bash) cuya única finalidad es iniciar, detener o reiniciar los servicios del sistema de forma automática y controlada durante el arranque, el apagado o al cambiar de un Runlevel a otro.
+  
+Los scripts, los cuales son **los que se ejecutan**, se almacenan todos en un único directorio general: `/etc/init.d`.  
+En cambio, para organizar en qué runlevel se ejecuta cada uno, existen directorios separados para cada estado en `/etc/rcX.d` (donde `X` es un número de runlevel entre 0 y 6). En estos directorios se guardan **links simbólicos** a los archivos que hay en `/etc/init.d`.  
+  
+El proceso `init` sabe qué acción tomar analizando la letra inicial con la que fue nombrado el enlace simbólico:
+- Si el enlace empieza con la letra `S` (*Start*): El sistema asume que el servicio debe levantarse. Llama al script pasándole el parámetro start.
+- Si el enlace empieza con la letra `K` (*Kill*): El sistema asume que el servicio debe detenerse. Llama al script pasándole el parámetro stop.  
+  
+_Ejemplo: Si se entra al Runlevel 0 (apagado), el sistema revisará el directorio `/etc/rc0.d/` y encontrará enlaces que empiezan con `K`, para lo cual procederá a matar todos esos servicios._  
+  
+Existe un orden estricto para llamar los Runlevels, este es crítico debido a las dependencias entre los servicios. El orden se determina mediante un número de dos dígitos colocado inmediatamente después de la letra `S` o `K` en el nombre del enlace simbólico. El sistema luego los ejecutará en orden numérico ascendente. _Ejemplo: `S10network`, `S20apache2`, `S50mysql`._
+
+### 13. SystemD:  
+#### 1. ¿Qué es systemd?  
+Systemd es un administrador de sistemas y servicios para sistemas operativos GNU/Linux que **actúa como el proceso init** de la máquina. Al ser el primer proceso que ejecuta el Kernel, **recibiendo el PID 1**, se encarga de centraliza la **administración de demonios** (servicios) **y librerías** del sistema.  
+Fue diseñado para reemplazar al SysV init con el objetivo de superar sus limitaciones. Sus principales ventajas son la paralelización masiva; ya que inicia servicios al mismo tiempo en lugar de uno por uno, reduciendo drásticamente el tiempo de arranque; y la gestión avanzada de dependencias y el inicio de servicios bajo demanda (*socket-based activation*).
+
+#### 2. ¿A qué hace referencia el concepto de Unit en SystemD? 
+En Systemd, una *Unit* es el bloque de construcción fundamental; representa cualquier recurso, servicio o entidad que el sistema sabe cómo administrar y configurar.  
+A diferencia de SysV init, que usaba scripts de bash, Systemd usa archivos de texto plano declarativos, similares a los archivos `.ini`, para definir estas unidades. Cada unidad tiene un nombre y una extensión que indica su tipo:
+- `.service`: controla un servicio particular. Es el reemplazo directo de los scripts RC.
+- `.socket`: encapsula IPC, un socket del sistema o file system FIFO.
+- `.target`: agrupa *units* y establece puntos de sincronización durante el arranque. Es el reemplazo directo de los Runlevels.
+- `.snapshot`: almacena el estado de un conjunto de unidades para que pueda ser restablecido más tarde.  
+  
+Las units pueden tener dos estados: `active` o `inactive`.
+
+#### 3. ¿Para qué sirve el comando systemctl en SystemD?  
+El comando `systemctl` es la herramienta principal de la interfaz CLI usada para **inspeccionar y controlar el estado del administrador del sistema** (*Systemd*) y de sus unidades. Centraliza todas las tareas de administración, incluyendo ejemplos como:
+- Arrancar o detener servicios en tiempo real: `systemctl start [unidad]` o `systemctl stop [unidad]`.
+- Verificar el estado y los logs recientes de un servicio: `systemctl status [unidad]`.
+- Habilitar o deshabilitar un servicio para que arranque automáticamente junto con el sistema operativo: `systemctl enable [unidad]` o `systemctl disable [unidad]`.
+
+#### 4. ¿A qué hace referencia el concepto de target en SystemD? 
+Un target (*objetivo*) es un tipo especial de unidad en Systemd (con extensión `.target`) cuyo único propósito es agrupar otras unidades para crear puntos de sincronización y estados del sistema.  
+En lugar de tener niveles numerados (1 al 6), Systemd utiliza nombres descriptivos basados en dependencias. Ejemplos:
+- `multi-user.target`: Agrupa todos los servicios necesarios para tener un sistema de texto con red funcional (equivale al **Runlevel 3**).
+- `graphical.target`: Depende del multi-user.target, pero le suma las unidades necesarias para levantar la interfaz gráfica (equivale al **Runlevel 5**).
+- `poweroff.target`: Apagado. (equivale al **Runlevel 0**).  
+  
+Para cambiar de estado operativo: en lugar de usar `init 3`, en Systemd se ejecuta `systemctl isolate multi-user.target`.
+
+#### 5. Ejecutar el comando pstree. ¿Qué es lo que se puede observar a partir de la ejecución de este comando? 
+El comando `pstree` (Process Tree) se utiliza para mostrar los procesos actualmente en ejecución en el sistema en un formato de *árbol jerárquico*. Pudiendo observar visualmente la relación de parentesco entre todos los programas de la computadora.   
+Observando la raíz del árbol podemos ver:
+- *Systemd en la cúspide*: El nodo principal del cual nacen absolutamente todas las ramas es el proceso `systemd`.
+- *Confirmación del PID 1*: Al ser `systemd` el primer proceso cargado por el Kernel, todos los demás servicios, aplicaciones de usuario y terminales en el sistema operativo son, directa o indirectamente, procesos "hijos" que fueron lanzados por él.
