@@ -1,4 +1,38 @@
-# Práctica 01
+### 11. # Práctica 01
+
+### Índice
+1. [Características de GNU/Linux](#1-Características-de-GNU/Linux)
+2. [Distribuciones de GNU/Linux](#2-Distribuciones-de-GNU/Linux)
+3. [Estructura de GNU/Linux](#3-estructura-de-gnulinux)
+4. [Kernel](#4-kernel)
+5. [Intérprete de comandos (Shell)](#5-intérprete-de-comandos-shell)
+6. [El sistema de Archivos (File System) en Linux](#6-el-sistema-de-archivos-file-system-en-linux)
+7. [Particiones](#7-particiones)
+8. [Arranque (bootstrap) de un Sistema Operativo](#8-arranque-bootstrap-de-un-sistema-operativo)
+9. [Archivos y editores](#9-archivos-y-editores)
+    - [cd, mkdir, rmdir, ln, tail, locate, ls, pwd, cp, mv, find](#5-Investigue-la-funcionalidad-y-parámetros-de-los-siguientes-comandos-relacionados-con-el-uso-de-archivos)
+10. [Indicando comandos](#10-Indique-qué-comando-es-necesario-utilizar-para-realizar-cada-una-de-las-siguientes-acciones-Investigue-su-funcionamiento-y-parámetros-más-importantes)
+11. [Definiendo comandos](#11-Investigue-el-objetivo-parámetros-y-ubicación-directorio-de-los-siguientes-comandos)
+12. [Proceso de arranque, SystemV](#12-proceso-de-arranque-systemv-)
+13. [SystemD](#13-systemd)
+14. [Usuarios](#14-usuarios)
+15. [File System y Permisos](#15-filesystem-y-permisos)
+16. [Procesos](#16-procesos)
+17. [Otros comandos de Linux](#17-otros-comandos-de-linux-indique-funcionalidad-y-parámetros)
+    - [tar, grep, gzip, zgrep, wc](#5-investigue-la-funcionalidad-de-los-siguientes-comandos)
+18. [Explicando script 1](#18-indique-qué-acción-realiza-cada-uno-de-los-comandos-indicados-a-continuación-considerando-su-orden-suponga-que-se-ejecutan-desde-un-usuario-que-no-es-root-ni-pertenece-al-grupo-de-root-asuma-que-se-encuentra-posicionado-en-el-directorio-de-trabajo-del-usuario-con-el-que-se-logueó-en-caso-de-no-poder-ejecutarse-el-comando-indique-la-razón)
+19. [Indicando comandos 1](#19-indique-qué-comando-sería-necesario-ejecutar-para-realizar-cada-una-de-las-siguientes-acciones)
+20. [Indicando comandos 2](#20-indique-qué-comando-sería-necesario-ejecutar-para-realizar-cada-una-de-las-siguientes-acciones)
+21. []()
+22. []()
+23. []()
+24. []() 
+
+
+¿Es posible tener en una PC GNU/Linux y otro Sistema Operativo instalado?
+Indique qué comando es necesario utilizar para realizar cada una de las siguientes acciones
+
+
 
 ### 1. Características de GNU/Linux: 
 #### 1. Mencione y explique las características más relevantes de GNU/Linux.  
@@ -24,6 +58,42 @@ La multitarea es la **capacidad de un SO para ejecutar varios programas a proces
 Posix es un **estándar creado por el IEEE que define como debe comunicarse un programa con el sistema operativo**, de ahí sus siglas (Portable operating system interface, y la x a partir de su funcionamiento en sistemas de tipo Unix). El objetivo que tiene es el de lograr que **el software sea fácil de mover y usar** entre diferentes computadoras, permitiendo compatibilidad, orden y unión.
 
 
+### 2. Distribuciones de GNU/Linux:  
+#### 1. ¿Qué es una distribución de GNU/Linux? Nombre al menos 4 distribuciones de GNU/Linux y cite diferencias básicas entre ellas.
+Una distribución o *distro* de GNU/Linux es un sistema operativo completo y empaquetado que combina el núcleo (Kernel) Linux con las herramientas y bibliotecas del proyecto GNU, un sistema de gestión de paquetes y una selección de software adicional. Dado que el código de Linux y GNU es libre, cualquier individuo u organización puede ensamblar estas piezas para crear una versión del sistema operativo lista para ser instalada.   
+   
+Cuatro distribuciones y sus diferencias básicas:  
+- Ubuntu: Basada en Debian, está diseñada con un enfoque absoluto en la facilidad de uso, la compatibilidad de hardware (incluyendo controladores privativos) y un ciclo de lanzamiento predecible. Es ideal para usuarios que recién migran desde Windows.
+- Fedora: Patrocinada por Red Hat, se enfoca en ofrecer la tecnología más innovadora y reciente. Funciona como banco de pruebas para las tecnologías empresariales de Red Hat y mantiene una política estricta de incluir únicamente software libre por defecto.
+- Arch Linux: Orientada a usuarios avanzados. Sigue el modelo *Do It Yourself*, donde el usuario instala desde una terminal negra únicamente lo que necesita, pieza por pieza. Utiliza un modelo de actualización continua.
+- Linux Mint: Basada en Ubuntu, pero diseñada para ofrecer un entorno visual más tradicional, similar al paradigma clásico de escritorio y barra de tareas de Windows, gracias a su entorno Cinnamon, siendo aún más amigable y ligera.  
+
+#### 2. ¿En qué se diferencia una distribución de otra? 
+Aunque todas comparten el mismo Kernel Linux en su base, las distribuciones divergen significativamente en las siguientes decisiones de diseño:  
+- Gestor de paquetes: La herramienta utilizada para instalar, actualizar y borrar software (APT y paquetes `.deb` en Debian/Ubuntu; DNF y paquetes `.rpm` en Fedora/RedHat; Pacman en Arch).
+- Ciclo de actualizaciones (*Release Model*):
+    - Lanzamiento fijo (*Point Release*): Se lanza una versión estable cada cierto tiempo (ej. Ubuntu cada 6 meses, Debian cada 2 años). El software no cambia sus versiones mayores para garantizar la máxima estabilidad.
+    - Lanzamiento continuo (*Rolling Release*): No hay versiones del sistema operativo. El software se actualiza a su última versión el mismo día que los desarrolladores lo publican (ej. Arch Linux).
+- Público objetivo: Existen distros para servidores corporativos, computadoras de escritorio, ciberseguridad (Kali Linux) o rescate de datos.
+- Entorno de escritorio predeterminado: La interfaz gráfica que el usuario ve al iniciar sesión (GNOME, KDE Plasma, XFCE, Cinnamon).
+- Filosofía sobre el software privativo: Algunas distros (como Trisquel) rechazan cualquier código que no sea 100% libre, mientras que otras (como Ubuntu) facilitan la instalación de drivers cerrados (como los de NVIDIA) por pragmatismo.
+
+#### 3. ¿Qué es Debian? Acceda al sitio https://www.debian.org/ e indique cuáles son los objetivos del proyecto y una breve cronología del mismo. 
+Debian es un sistema operativo libre y, al mismo tiempo, una inmensa comunidad global de voluntarios y desarrolladores. Es una de las distribuciones más antiguas e influyentes (es la base sobre la que se construyen cientos de otras distribuciones, como Ubuntu, Kali o Raspberry Pi OS).  
+**Objetivos principales**:  
+- Mantenerse 100% libre: El sistema base de Debian siempre estará compuesto exclusivamente por software libre, respetando las Directrices de Software Libre de Debian (DFSG).
+- Estabilidad y robustez por encima de todo: En su rama "Estable", el proyecto prioriza un sistema a prueba de fallos, ideal para servidores críticos, en lugar de apresurarse a incluir el software más moderno.
+- No ocultar los problemas: Mantener una base de datos de errores (Bug Tracking System) pública y transparente para toda la comunidad.
+- Universalidad: Ser "El sistema operativo universal", soportando la mayor cantidad de arquitecturas de procesadores posibles y sirviendo para cualquier caso de uso.  
+  
+**Breve cronología**:
+- 1993: Ian Murdock funda el proyecto y lanza el Manifiesto Debian (el nombre proviene de la combinación del nombre de su entonces novia, Debra, y el suyo, Ian).
+- 1996: Se lanza Debian 1.1 "Buzz". Se establece la tradición de nombrar todas las versiones estables con personajes de la película Toy Story.
+- 1997: Se publica oficialmente el Contrato Social de Debian, estableciendo la filosofía política y técnica del proyecto.
+- 1998/1999: Se introduce la herramienta APT (Advanced Package Tool), revolucionando la gestión de dependencias en GNU/Linux.
+- 2007: Debian comienza a incluir oficialmente instaladores gráficos y se consolida como la base para el explosivo éxito de Ubuntu.
+- En la actualidad: El proyecto continúa lanzando versiones estables aproximadamente cada 2 años (como Bullseye o Bookworm), manteniéndose como el pilar fundamental del ecosistema de servidores web a nivel mundial.
+
 ### 3. Estructura de GNU/Linux:  
 #### 1. Nombre cuáles son los componentes fundamentales de GNU/Linux. 
 Los componentes fundamentales de GNU/Linux consisten en el Kernel de Linux, que actúa como la última capa entre el hardware fisico de la computadora y el software, administrando el CPU, la memoria y los dispositivos, además de presentar una solución en caso de que falle todo lo demás ante algún problema imprevisto; el intérprete de comandos, el shell, el cual recibe lo que se escribe en la terminal y lo convierte en instrucciones para el SO, puede ser CLI (Command Line Intertace), como en el caso de Debian, CUI (Character User Interface, un sinónimo de CLI que estrictamente solo tiene caracteres ASCII) ó GUI (Graphical User Interface); y también el sistema de archivos, los cuales organizan la forma en que se almacenan los archivos en los dispositivos de almacenamiento.
@@ -39,14 +109,13 @@ Los componentes fundamentales de GNU/Linux consisten en el Kernel de Linux, que 
 El Kernel ejecuta programas y gestiona dispositivos de hardware con el fin de comunicar el hardware con el software, es también el encargado de la administración de memoria, CPU y E/S. 
 
 #### 2. ¿Es posible tener más de un Kernel de GNU/Linux instalado en la misma máquina?(ayuda /boot)  
-Es posible tener múltiples kernels de Linux instalados en la misma computadora, ya que cada uno se guarda en las particiones de disco destinadas a los /boot; estas contienen cada uno su instalación del kernel, como un archivo individual, y su propio archivo initrd. Al ejecutarse el gestor de arranque (GRUB), detecta todos los kernels y permite elegir el descado con un menú.
+Es posible tener múltiples kernels de Linux instalados en la misma computadora, ya que cada uno se guarda en las particiones de disco destinadas a los `/boot`; estas contienen cada uno su instalación del kernel, como un archivo individual, y su propio archivo `initrd`. Al ejecutarse el gestor de arranque (GRUB), detecta todos los kernels y permite elegir el descado con un menú.
 
 #### 3. ¿En qué directorio se encuentra ubicado?  
-El archivo de la instalación del Kernel se encuentra en el directorio /boot .
+El archivo de la instalación del Kernel se encuentra en el directorio `/boot`.
 
 
 ### 5. Intérprete de comandos (Shell):
-
 #### 1. ¿Qué es y cuáles son sus funciones?  
 El Shell, también conocido como CLI (Command Line Interface), línea de comandos, terminal o consola; actúa como **modo de comunicación entre el usuario y el sistema operativo**, esperando el ingreso de comandos por parte del usuario, mientras que la respuesta del SO es mostrada al usuario en la misma ventana. Cada usuario puede tener una interfaz o shell, y **pueden personalizarse** ya que **son programables**. El funcionamiento del shell consiste en que, en su forma más básica, se muestra un *prompt*, un conjunto de caracteres que se muestran en una línea de comandos para indicarnos que está a la espera de ordenes, en el Bourne Shell y sus derivados, el prompt suele ser el carácter $ para los usuarios y # para el administrador. Luego el usuario teclea una orden en el teclado y finaliza la orden, y la computadora ejecuta la orden, proporcionando una salida de texto.
 
@@ -66,7 +135,7 @@ Los comandos propios son reconocidos y ejecutados por el shell directamente y si
 El shell no forma parte del kernel básico del SO; sino que el mismo "dialoga" con el kernel. El shell es una aplicación de la capa de usuario que traduce las órdenes escritas o visuales del usuario para que el sistema las entienda. Funciona por encima del kernel, usando llamadas al sistema para comunicarse con él.
 
 #### 5. ¿Es posible definir uno distinto para cada usuario?  
-Sí, cada usuario puede tener una interfaz o shell. La shell es iniciada por un proceso denominado "login", y dado que cada usuario tiene asignado una shell por defecto, la misma se inicia cada vez que un usuario comienza a trabajar en su estación de trabajo (es decir se "loguea" en una terminal). Dentro del contenido del archivo /etc/passwd, se puede ver cual es la shell que cada usuario tiene asignada por defecto.  
+Sí, cada usuario puede tener una interfaz o shell. La shell es iniciada por un proceso denominado "login", y dado que cada usuario tiene asignado una shell por defecto, la misma se inicia cada vez que un usuario comienza a trabajar en su estación de trabajo (es decir se "loguea" en una terminal). Dentro del contenido del archivo `/etc/passwd`, se puede ver cual es la shell que cada usuario tiene asignada por defecto.  
 
 
 ### 6. El sistema de Archivos (File System) en Linux:
@@ -365,13 +434,13 @@ Esto muestra `/bin/ls: ELF 64-bit LSB pie executable, x86-64...` ya que, a pesar
     - `find -size [+/-]tamaño`: Busca archivos por tamaño. Ejemplo: `find -size +50M` busca archivos de más de 50 Megabytes.
     - `find -exec [comando] {} \;`: Permite ejecutar un comando sobre cada archivo encontrado automáticamente    
     Ejemplo: buscar todos los archivos con extensión `.tmp` en el directorio personal y borrarlos (`rm`):
-        ```bash
+```bash
         find ~/ -name "*.tmp" -exec rm -v {} \;
-        ```
-        `find ~/ -name "*.tmp"`: Busca en tu directorio personal todo lo que termine en `.tmp`.  
-        `-exec rm -v`: Indica que se ejecutará el comando de borrado (con `-v` para que imprima en pantalla lo que borra).  
-        `{}`: Es un comodín. `find` reemplaza estas llaves por la ruta de cada archivo que va encontrando.  
-        `\;`: Es obligatorio para indicarle a `find` dónde termina el comando que debe ejecutar. (La barra invertida `\` sirve para que la terminal no interprete el punto y coma como un salto de línea propio).  
+```  
+- `find ~/ -name "*.tmp"`: Busca en tu directorio personal todo lo que termine en `.tmp`.  
+- `-exec rm -v`: Indica que se ejecutará el comando de borrado (con `-v` para que imprima en pantalla lo que borra).  
+- `{}`: Es un comodín. `find` reemplaza estas llaves por la ruta de cada archivo que va encontrando.  
+- `\;`: Es obligatorio para indicarle a `find` dónde termina el comando que debe ejecutar. (La barra invertida `\` sirve para que la terminal no interprete el punto y coma como un salto de línea propio).  
 
 
 ### 10. Indique qué comando es necesario utilizar para realizar cada una de las siguientes acciones. Investigue su funcionamiento y parámetros más importantes:  
@@ -596,4 +665,331 @@ Para cambiar de estado operativo: en lugar de usar `init 3`, en Systemd se ejecu
 El comando `pstree` (Process Tree) se utiliza para mostrar los procesos actualmente en ejecución en el sistema en un formato de *árbol jerárquico*. Pudiendo observar visualmente la relación de parentesco entre todos los programas de la computadora.   
 Observando la raíz del árbol podemos ver:
 - *Systemd en la cúspide*: El nodo principal del cual nacen absolutamente todas las ramas es el proceso `systemd`.
-- *Confirmación del PID 1*: Al ser `systemd` el primer proceso cargado por el Kernel, todos los demás servicios, aplicaciones de usuario y terminales en el sistema operativo son, directa o indirectamente, procesos "hijos" que fueron lanzados por él.
+- *Confirmación del PID 1*: Al ser `systemd` el primer proceso cargado por el Kernel, todos los demás servicios, aplicaciones de usuario y terminales en el sistema operativo son, directa o indirectamente, procesos "hijos" que fueron lanzados por él.   
+
+### 14. Usuarios:  
+#### 1. ¿Qué archivos son utilizados en un sistema GNU/Linux para guardar la información de los usuarios?
+En un sistema GNU/Linux, la información de los usuarios no se guarda en un solo lugar, sino que se distribuye principalmente en dos archivos de texto plano (y un tercero para los grupos), separando la información pública de la información de seguridad:
+- `/etc/passwd`: Es la base de datos principal de los usuarios. Contiene **una línea por cada usuario** registrado en el sistema. Es de lectura pública (cualquiera puede verlo). Cada línea guarda: 
+    - El nombre de usuario.
+    - Una `x` en donde, en versiones antiguas, estaba la contraseña
+    - El UID. 
+    - El GID principal
+    - Un comentario (GECOS, que suele ser el nombre real).
+    - La ruta de su directorio personal (`/home/usuario`).
+    - La shell que se ejecutará al iniciar sesión (ejemplo: `/bin/bash`). 
+- `/etc/shadow`: Es el archivo de contraseñas en la sombra. **Solo el usuario root tiene permisos para leerlo**. Aquí se almacena la contraseña real de cada usuario (encriptada mediante un algoritmo de hash unidireccional), junto con las políticas de caducidad de la clave.
+- `/etc/group`: Almacena la información de los grupos del sistema, vinculando a los usuarios con sus respectivos identificadores de grupo.
+
+#### 2. ¿A qué hacen referencia las siglas UID y GID? ¿Pueden coexistir UIDs iguales en un sistema GNU/Linux? Justifique. 
+**UID** (*User Identifier*): Es un número entero que el sistema operativo asigna a cada usuario. A nivel interno, en el Kernel y en el filesystem, GNU/Linux no entiende "nombres de usuario"; todo el control de permisos, propiedad de archivos y ejecución de procesos se gestiona exclusivamente a través de este número UID.  
+**GID** (*Group Identifier*): Es el equivalente numérico para identificar a los grupos. Define a qué colectivo pertenece un usuario para heredar los permisos grupales sobre un archivo o directorio.
+**Es posible** coexistir UIDs iguales, aunque **es una mala práctica**, ya que como los archivos `/etc/passwd` y `/etc/shadow` son simples archivos de texto, el administrador puede editarlos y asignarle el mismo número UID a dos nombres de usuario distintos. Haciendo esto, dado que el Kernel de Linux toma sus decisiones de seguridad basándose únicamente en el número UID y no en el nombre, para el sistema operativo ambos usuarios son exactamente la misma entidad, tendrán los mismos permisos, leerán los mismos archivos y podrán matar los procesos del otro.
+
+#### 3. ¿Qué es el usuario root? ¿Puede existir más de un usuario con este perfil en GNU/Linux? ¿Cuál es la UID de root? 
+Es el **superusuario o administrador del sistema**. Es el único perfil que no está sujeto a las restricciones de permisos del sistema de archivos. Puede leer, modificar o eliminar cualquier archivo, cambiar las contraseñas de cualquier persona, matar cualquier proceso, abrir puertos de red privilegiados e instalar software a nivel global.  
+Es posible que exista más de un usuario con el perfil `root` si un administrador edita el archivo `/etc/passwd` y crea un nuevo usuario, y le asigna manualmente *el mismo UID que tiene root*, ese nuevo usuario se convertirá en un superusuario con poder absoluto. El sistema operativo lo tratará con los mismos privilegios exactos, ya que es un alias de `root`.  
+La UID de root es siempre `0`. En GNU/Linux, **cualquier cuenta de usuario que posea el UID `0`** es, por definición, el superusuario.
+
+#### 4. Agregue un nuevo usuario llamado isocso a su instalación de GNU/Linux, especifique que su home sea creada en /home/isocso, y hágalo miembro del grupo informatica (si no existe, deberá crearlo). Luego, sin iniciar sesión como este usuario cree un archivo en su home personal que le pertenezca. Luego de todo esto, borre el usuario y verifique que no queden registros de él en los archivos de información de los usuarios y grupos.  
+Todos los comandos de gestión de usuarios afectan directamente al sistema de archivos raíz y deben ejecutarse con **privilegios de superusuario** por lo que debemos tener permisos de sudoers para cada instrucción.  
+Se crea el grupo de forma manual en el sistema ejecutando:
+```bash
+sudo groupadd informatica
+```
+*Para verificar el éxito de la creación del grupo ejecutamos* `grep informatica /etc/group`*, debería verse el nombre del grupo impreso en pantalla junto al GID.*  
+  
+Luego se crea el usuario indicando explícitamente que genere su directorio personal (-m), especificando la ruta de su home (-d) y asignándolo al grupo principal que acabas de crear (-g):
+```bash
+sudo useradd -m -d /home/isocso -g informatica isocso
+```
+*Para verificar el éxito de la creación del usuario ejecutamos* `id isocso`. *debería devolver su UID numérico y confirmar que pertenece al GID de informatica.*  
+  
+Se crea el archivo directamente en su directorio usando `touch` y luego se le transfiere la propiedad del mismo usando `chown` (*change owner*):
+```bash
+sudo touch /home/isocso/archivo_prueba.txt
+sudo chown isocso:informatica /home/isocso/archivo_prueba.txt
+```
+*Para verificar que el usuario* `isocso` *es el dueño legítimo ejecutamos* `sudo ls -l /home/isocso/archivo_prueba.txt`. *debería aparecer* `isocso` *como propietario en la tercera columna.*   
+  
+Para borrar el usuario `isocso` y verificar que no queden registros de él en los archivos de información de los usuarios y grupos, usamos el parámetro `-r` (*recursive*) del comando `userdel`, eliminando por completo su directorio `/home/isocso` y todos los archivos en su interior:
+```bash
+sudo userdel -r isocso
+```
+*Para verificar que que la cuenta y sus datos fueron eliminados ejecutamos* `id isocso`*, esto debería imprimir "no existe el usuario", y luego ejecutamos `sudo ls -d /home/isocso`, que debería indicar que "No existe el archivo o el directorio".*   
+  
+También usamos el comando `grep` para buscar cualquier rastro de la cadena de texto "isocso" simultáneamente en las tres bases de datos de usuarios y grupos:
+```bash
+sudo grep isocso /etc/passwd /etc/shadow /etc/group
+```
+*la terminal no debería devolver ninguna línea de texto ni arrojar resultados, confirmando que los archivos están completamente limpios de ese usuario.*
+#### 5. Investigue la funcionalidad y parámetros de los siguientes comandos:  
+1. `useradd` y `adduser` (Creación de usuarios):
+    - `useradd`: Es el comando binario *estándar de bajo nivel* en todos los sistemas UNIX/Linux. Si se ejecuta sin parámetros, crea la entrada en `/etc/passwd` pero **no crea el directorio `/home`** ni asigna una contraseña.
+        - `useradd -m`: Fuerza la creación del directorio personal `/home/usuario`.
+        - `useradd -d [ruta]`: Especifica una ruta no estándar para el directorio personal.
+        - `useradd -s [ruta]`: Define el intérprete de comandos (*shell*) por defecto (ej. `/bin/bash`).
+        - `useradd -g [grupo]`: Asigna el grupo principal.
+    - `adduser`: Es un script interactivo de alto nivel, escrito en Perl, exclusivo de Debian/Ubuntu y derivados. Al ejecutarlo, **crea automáticamente el directorio personal**, copia los **archivos de configuración base**, y te pregunta interactivamente la **contraseña y los datos personales** (*GECOS*).
+2. `usermod` (Modificación de usuarios): Altera las propiedades de una cuenta de usuario que ya existe en el sistema.
+    - `usermod -aG [grupo]` (*append group*): Es la combinación más utilizada. El parámetro `-G` *define los grupos secundarios*, pero si no se acompaña de `-a` (*append*), el usuario será borrado de todos sus grupos anteriores. Usar `-aG` garantiza que solo se sume al nuevo grupo.
+    - `usermod -l [nuevo_nombre]` (*login*): Cambia el nombre de inicio de sesión del usuario.
+    - `usermod -L / -U` (*Lock / Unlock*): Bloquea (`-L`) o desbloquea (`-U`) la cuenta poniendo o quitando un símbolo especial en `/etc/shadow`, impidiendo el inicio de sesión con contraseña.
+3. `userdel` (Eliminación de usuarios):
+    - `userdel -r` (*recursive*): Elimina también el directorio personal del usuario `/home/usuario` y su buzón de correo local. Sin este parámetro, la cuenta se borra pero sus archivos quedan huérfanos en el disco.
+    - `userdel -f` (*force*): Fuerza la eliminación de la cuenta incluso si el usuario tiene una sesión iniciada o procesos en ejecución en ese momento.
+4. `su` (_Substitute User_): Permite cambiar temporalmente la identidad de la sesión actual por la de otro usuario. Por defecto, asume que se quiere cambiar a `root`.
+    - `su -` (o `-l`, `--login`): Es el parámetro más crítico. Al ejecutar `su - usuario`, no solo cambias de identidad, sino que el sistema carga un entorno completamente nuevo, aplicando las variables de entorno (`$PATH`, `$HOME`) exclusivas de ese usuario, como si acabara de encender la máquina.
+    - `su -c "[comando]"`: Permite ejecutar un único comando con los privilegios del otro usuario y, al terminar, devuelve instantáneamente el control al usuario original.
+5. `groupadd` (Creación de grupos): Crea un nuevo grupo lógico en el sistema,agregando una entrada en `/etc/group`.
+    - `groupadd -g [GID]`: Permite forzar la creación del grupo con un Número de Identificador de Grupo (GID) específico, en lugar de dejar que el sistema asigne el siguiente número disponible.
+6. `who` (Usuarios conectados): Informa qué usuarios tienen sesiones activas en el sistema.
+    - `who -b` (*boot*): Muestra la fecha y hora exactas del último arranque del sistema.
+    - `who -q` (*count*): Imprime únicamente los nombres de los usuarios conectados y el número total de conexiones, omitiendo detalles de terminales y fechas.
+7. `groupdel` (Eliminación de grupos): Elimina un grupo existente del sistema.
+    - No tiene parámetros de uso cotidiano, pero tiene una restricción de seguridad estricta: el comando abortará y arrojará error si intentas borrar *un grupo que actualmente es el grupo principal de algún usuario existente*.
+8. `passwd`: (Gestión de contraseñas): Permite cambiar la propia contraseña, o (con permisos de administrador) cambiar o gestionar las contraseñas de cualquier otro usuario.
+    - `passwd -l` (*lock*): Bloquea la contraseña de la cuenta (similar a `usermod -L`).
+    - `passwd -d` (*delete*): Elimina la contraseña de una cuenta, dejándola vacía. (El usuario podrá iniciar sesión sin teclear ninguna clave, lo cual es un riesgo grave de seguridad).
+    - `passwd -e` (*expire*): Fuerza la caducidad inmediata de la contraseña. El usuario podrá iniciar sesión con su clave actual una vez más, pero el sistema lo obligará a crear una clave nueva obligatoriamente en ese mismo instante.
+
+### 15. FileSystem y permisos:  
+#### 1. ¿Cómo son definidos los permisos sobre archivos en un sistema GNU/Linux?  
+Los permisos se basan en un modelo de matriz que cruza tres tipos de acciones con *tres tipos de identidades*. 
+
+Las identidades a las que se les aplican reglas son:  
+- **Usuario (u)**: El propietario del archivo.
+- **Grupo (g)**: El grupo al que pertenece el archivo.
+- **Otros (o)**: Cualquier otro usuario del sistema que no sea el dueño ni pertenezca al grupo.  
+
+Las acciones permitidas son:
+- **Lectura (`r` - *Read*)**: Permite ver el contenido dentro de los archivos, o listar el contenido en los directorios.
+- **Escritura (`w` - *Write*)**: Permite modificar/borrar el archivo, o crear/borrar archivos dentro de un directorio.
+- **Ejecución (`x` - *Execute*)**: Permite ejecutar el archivo como un programa. En un directorio, usar `cd` para atravesarlo.
+
+#### 2. Investigue la funcionalidad y parámetros de los siguientes comandos relacionados con los permisos en GNU/Linux:  
+1. `chmod` (_Change Mode_): Modifica los permisos de lectura, escritura y ejecución de un archivo o directorio.
+    - `chmod -R` (*recursive*): aplica a todos los archivos dentro de una carpeta. 
+    - `chmod +x` (*execute*): añade permiso de ejecución.
+    - `chmod -w` (*write*): quita permiso de escritura.
+2. `chown` (_Change Owner_): Cambia el propietario de un archivo. También puede cambiar el grupo al mismo tiempo utilizando la sintaxis `usuario:grupo`.
+    - `chown -R` (*recursive*): cambia el dueño de un directorio y todo su contenido interno de forma recursiva. 
+3. `chgrp` (_Change Group_): Cambia únicamente el grupo propietario de un archivo o directorio.
+    - `chgrp -R` (*recursive*).
+
+#### 3. Al utilizar el comando chmod generalmente se utiliza una notación octal asociada para definir permisos. ¿Qué significa esto? ¿A qué hace referencia cada valor?  
+La notación octal es un sistema numérico para asignar permisos rápidamente sumando valores predefinidos, donde cada derecho tiene un peso binario:
+- Lectura (`r`) = 4
+- Escritura (`w`) = 2
+- Ejecución (`x`) = 1
+- Sin permisos (`-`) = 0  
+
+Al utilizar `chmod`, se escriben tres números del 0 al 7. El primero corresponde al Dueño, el segundo al Grupo y el tercero a los Otros.
+
+#### 4. ¿Existe la posibilidad de que algún usuario del sistema pueda acceder a determinado archivo para el cual no posee permisos? Indiquelo y realice las pruebas correspondientes. 
+El usuario administrador `root` (UID 0) evade por completo el sistema de permisos de GNU/Linux. Puede leer, modificar o borrar cualquier archivo del disco, incluso si los permisos del archivo le deniegan explícitamente el acceso a todos.  
+Para probarlo:
+1. Creamos un archivo como usuario normal: `touch ~/secreto.txt`
+2. Escribimos algo adentro: `echo "datos" > ~/secreto.txt`
+3. Removemos todos los permisos al archivo: `chmod 000 ~/secreto.txt`
+4. Intentamos leerlo como usuario normal: `cat ~/secreto.txt`. La terminal devolverá: *Permiso denegado*.
+5. Ahora lo leemos usando privilegios de superusuario: `sudo cat ~/secreto.txt`. La terminal ignorará los permisos nulos y mostrará la palabra "datos".
+
+#### 5. Explique los conceptos de “full path name” (path absoluto) y “relative path name” (path relativo). De ejemplos claros de cada uno de ellos.  
+- **Path Absoluto** (_Full path name_): Es la ruta completa e inequívoca desde la raíz principal del sistema operativo (`/`) hasta el archivo. No importa en qué carpeta estés ubicado, esta ruta siempre funciona.  
+    - Ejemplo: `/home/matias/Documentos/informe.pdf`
+- **Path Relativo** (_Relative path name_): Es una ruta incompleta que parte desde tu ubicación actual en la terminal.  
+    - Ejemplo: Si estás posicionado dentro de `/home/matias/`, el path relativo para acceder a ese mismo archivo es simplemente: `Documentos/informe.pdf` o `./Documentos/informe.pdf`.
+
+#### 6. ¿Con qué comando puede determinar en qué directorio se encuentra actualmente? ¿Existe alguna forma de ingresar a su directorio personal sin necesidad de escribir todo el path completo? ¿Podría utilizar la misma idea para acceder a otros directorios? ¿Cómo? Explique con un ejemplo. 
+Para determinar en qué directorio estás actualmente, se utiliza el comando `pwd` (*Print Working Directory*).  
+Se puede volver a tu home usando el símbolo de la tilde `~`. Ejecutando simplemente `cd ~` (o `cd` sin nada más), el sistema te lleva inmediatamente al directorio personal desde cualquier parte del disco.  
+Usando la misma idea para otros directorio se puede usar `~` seguido del nombre de otro usuario para entrar a su home, pero debemos de tener permisos de lectura.
+- *Ejemplo*: Para ir al directorio del usuario `isocso` desde la terminal de otro usuario, se debe ejecutar `cd ~isocso` y la terminal te moverá automáticamente a `/home/isocso`.
+
+#### 7. Investigue la funcionalidad y parámetros de los siguientes comandos relacionados con el uso del FileSystem: 
+1. `umount`: Desmonta de manera segura un sistema de archivos, desconectando un disco o pendrive del árbol de directorios. 
+    - `umount -f` (*force*): fuerza el desmontaje del filesystem. 
+    - `umount -l` (*lazy*): desmonta el filesystem en cuanto los programas dejen de usarlo.
+2. `du` (_Disk Usage_): Calcula cuánto espacio en disco está consumiendo un directorio específico y sus archivos internos. 
+    - `du -h` (*human-readable*): formato legible.
+    - `du -s` (*summary*): resume el total sin listar archivo por archivo.
+3. `df` (_Disk Free_): Muestra el espacio total libre y ocupado de todas las particiones montadas. 
+    - `df -h` (*human-readable*): legible en MB/GB, 
+    - `df -T` (*print-type*): muestra el tipo de sistema de archivos.
+4. `mount`: Conecta un dispositivo de almacenamiento, o una partición, a una carpeta vacía del sistema (*punto de montaje*) para poder acceder a sus datos. 
+    - `mount -t`(*filesystem type*): especifica el sistema de archivos. Ejemplo. ext4, ntfs.
+    - `mount -o loop`(*options*): monta un archivo de imagen ISO como si fuera un disco.
+5. `mkfs` (*Make FileSystem*): Se utiliza para "formatear" una partición vacía, escribiendo las estructuras lógicas de un sistema de archivos nuevo. 
+    - `mkfs -t` (*filesystem type*): para especificar el tipo. Ejemplo: `mkfs -t ext4 /dev/sdb1`. 
+6. `fdisk` **(con cuidado)**: Es una herramienta interactiva de bajo nivel para manipular tablas de particiones (MBR/GPT). Permite crear, borrar o redimensionar divisiones físicas del disco duro. 
+    - `fdisk -l` (list): lista todas las particiones actuales. 
+    *Requiere extremo cuidado porque equivocarse de disco destruye todos los datos irrecuperablemente*. 
+7. `write`: Aunque no es puramente de FileSystem, es el comando clásico para escribir mensajes de texto que aparecen directamente en la terminal de otro usuario conectado. 
+    - `write [usuario]`: se pasa el nombre de usuario. Ejemplo: `write root`.
+8. `losetup`: Asocia un archivo estándar (como una imagen `.img` o `.iso`) a un dispositivo de bloque virtual (*loop device*, ejemplo: `/dev/loop0`). Esto permite que herramientas como `mount` o `fdisk` traten a ese archivo como si fuera un disco duro físico real. 
+    - `losetup -f` (*find*): encuentra el primer dispositivo loop libre.  
+9. `stat`: Muestra la metadata profunda (el inodo completo) de un archivo o sistema de archivos. Revela su tamaño en bloques, permisos exactos en octal, UID, GID y las fechas exactas de último acceso, modificación y cambio estructural.
+
+
+### 16. Procesos
+#### 1. ¿Qué significa que un proceso se está ejecutando en Background? ¿Y en Foreground? 
+**Foreground** (*Primer plano*): Es el comportamiento predeterminado. Cuando ejecutas un comando, este toma el **control total de la terminal interactiva**. La terminal queda "bloqueada" esperando a que el proceso termine; todo lo que escribas en el teclado será enviado a ese proceso (*Entrada estándar*) y todos sus resultados se imprimirán en tu pantalla (*Salida estándar*). Hasta que no finalice, no vuelve a aparecer el prompt para ingresar un nuevo comando.
+
+**Background** (*Segundo plano*): Significa que el proceso se envía a ejecutarse de forma "invisible" o asíncrona en la memoria. El **sistema operativo inicia el proceso, pero te devuelve el control de la terminal** inmediatamente. Puedes seguir ejecutando otros comandos mientras el proceso original sigue trabajando de fondo. Un proceso en background pierde la capacidad de recibir entrada desde el teclado.
+
+#### 2. ¿Cómo puedo hacer para ejecutar un proceso en Background? ¿Como puedo hacer para pasar un proceso de background a foreground y viceversa?  
+*Para ejecutar un proceso en Background desde cero*:
+- Se debe agregar el símbolo `&` al final del comando. Ejemplo: `sleep 100 &`.  
+El sistema devolverá un número de trabajo, como `[1]`, y el PID del proceso, devolviéndonos a la terminal al instante.
+
+*Para pasar un proceso de Foreground a Background*:
+Si el proceso ya está iniciado y bloqueó la terminal, por ejemplo, con un script que tarda mucho:
+1. Presionar `Ctrl + Z`. Esto no mata el proceso, sino que lo pausa/suspende temporalmente y nos devuelve la terminal.
+2. Escribir el comando `bg` (*background*) y presionar `Enter`. El proceso suspendido reanudará su ejecución en segundo plano.
+
+*Para pasar un proceso de Background a Foreground*:
+Si hay uno o varios procesos ejecutándose en *background*, para traerlos de vuelta a la terminal principal se necesita:
+1. Escribir el comando `jobs` para listar los procesos en segundo plano y ver su número identificador. Ejemplo: `[1]`, `[2]`.
+2. Escribe el comando `fg %número` (*foreground*). Por ejemplo: `fg %1` traerá el trabajo `[1]` al primer plano, bloqueando la terminal nuevamente. Si solo se escribe `fg`, trae el último proceso enviado al *background*.
+
+#### 3. Pipe ( `|` ). ¿Cuál es su finalidad? Cite ejemplos de su utilización.  
+El Pipe (`|`) se utiliza para **encadenar comandos**, creando una "tubería" de datos. Su función exacta es *tomar la Salida Estándar (stdout) del comando que está a su izquierda, e inyectarla directamente como la Entrada Estándar (stdin) del comando que está a su derecha*, sin necesidad de crear archivos temporales en el disco duro.  
+  
+Ejemplos:
+- `ls -l /etc | less`: El directorio `/etc` tiene cientos de archivos. Si se ejecuta `ls -l` solo se vería el final del texto. Al usar el pipe, la salida masiva de `ls` se envía al paginador `less`, permitiendo navegar el resultado con las flechas del teclado.
+
+`cat /var/log/syslog | grep "error"`: Lee todo el contenido del registro del sistema, pero en lugar de imprimirlo en pantalla, se lo pasa por la tubería al comando `grep`, el cual filtra y muestra únicamente las líneas que contengan la palabra "error".
+
+#### 4. Redirección. ¿Qué tipo de redirecciones existen? ¿Cuál es su finalidad? Cite ejemplos de utilización.  
+En GNU/Linux, todo proceso tiene tres flujos de datos básicos identificados por números:
+- `0`: `stdin` (Entrada estándar) - *Por defecto el teclado*.
+- `1`: `stdout` (Salida estándar) - *Por defecto la pantalla*.
+- `2`: `stderr` (Salida de errores) - *Por defecto la pantalla*.  
+  
+La redirección permite cambiar estos orígenes y destinos predeterminados, enviando los datos hacia archivos o leyendo desde ellos.  
+*Tipos de redirecciones y ejemplos*:
+- **Redirección de Salida Estándar - Sobrescribir (`>`)**: Envía el resultado normal de un comando a un archivo. Si el archivo existe, borra su contenido anterior.
+    - *Ejemplo*: `echo "Hola Debian" > saludo.txt`
+- **Redirección de Salida Estándar - Añadir (`>>`)**: Envía el resultado a un archivo, pero agregándolo al final del mismo sin borrar lo que ya existía.
+    - *Ejemplo*: `echo "Nueva línea" >> saludo.txt`
+- **Redirección de Salida de Errores (`2>` o `2>>`)**: Separa los mensajes de error de los resultados normales y los guarda en un archivo.
+    - *Ejemplo*: `ls /directorio_falso 2> errores.log` (En pantalla no se verá nada, pero el mensaje "*No existe el archivo*" quedará guardado en `errores.log`).
+- **Redirección combinada (`&>` o `> archivo 2>&1`)**: Envía tanto el resultado normal (`1`) como los errores (`2`) al mismo archivo simultáneamente.
+    - *Ejemplo*: `ping google.com &> resultado_ping.txt`
+- **Redirección de Entrada Estándar (`<`)**: Obliga a un comando a leer sus datos desde un archivo en lugar de esperar a que el usuario escriba en el teclado.
+    - *Ejemplo*: `sort < lista_desordenada.txt` (El comando `sort` ordena alfabéticamente el contenido del archivo).
+
+
+### 17. Otros comandos de Linux (Indique funcionalidad y parámetros):  
+#### 1. ¿A qué hace referencia el concepto de empaquetar archivos en GNU/Linux? 
+En GNU/Linux, empaquetar significa tomar múltiples archivos o carpetas completas y unirlos secuencialmente dentro de un único archivo "contenedor", conocido como *tarball*, con extensión `.tar`.  
+La característica fundamental del empaquetado es que *no reduce el tamaño de los datos*. Su único objetivo es *facilitar el transporte y la gestión*, convirtiendo cientos de archivos en un solo bloque estructurado.
+
+#### 2.  Seleccione 4 archivos dentro de algún directorio al que tenga permiso y sume el tamaño de cada uno de estos archivos. Cree un archivo empaquetado conteniendo estos 4 archivos y compare los tamaños de los mismos. ¿Qué característica nota?  
+Usando `du -b [archivo]` para medir el tamaño de un archivo y `tar -cvf [nombrePaquete.tar] [archivo 1] [archivo 2] [...]` para empaquetarlos.  
+El archivo empaquetado `.tar` tiene un tamaño igual o superior a la suma exacta de los archivos individuales. Esto es porque el programa de empaquetado no comprime absolutamente nada, simplemente concatena los datos de los 4 archivos y les agrega *bloques adicionales de metadata* (cabeceras con los nombres, permisos, UID, GID y fechas de cada archivo) para poder reconstruirlos en el futuro, lo que genera un pequeño sobrepeso (*overhead*).
+
+#### 3. ¿Qué acciones debe llevar a cabo para comprimir 4 archivos en uno solo? Indique la secuencia de comandos ejecutados.  
+Las herramientas de compresión en GNU/Linux (como `gzip` o `bzip2`) solo *saben comprimir un archivo a la vez*.  
+Por esto, realizamos dos pasos:
+```bash
+tar -cvf paquete.tar archivo1 archivo2 archivo3 archivo4
+```
+Generando el el archivo contenedor `paquete.tar`. Y luego:
+```bash
+gzip paquete.tar
+```
+El comando convierte el archivo `.tar`, aplicando el algoritmo de compresión para reducir su tamaño, y lo reemplaza por `paquete.tar.gz`.
+
+#### 4. ¿Pueden comprimirse un conjunto de archivos utilizando un único comando?  
+Sí, se logra agregando el parámetro `-z` para usar el algoritmo `gzip` o `-j` para usar `bzip2`.
+El comando único sería:
+```bash
+tar -czvf paquete.tar.gz archivo1 archivo2 archivo3 archivo4
+```
+
+#### 5. Investigue la funcionalidad de los siguientes comandos:
+1. `tar` (_Tape ARchive_): Es la herramienta estándar para empaquetar y desempaquetar archivos. Originalmente diseñada para respaldos en cintas magnéticas, hoy *crea los archivos* `.tar`. 
+    - `tar -c` Permite crear un paquete.
+    - `tar -x` (*Extract*).
+    - `tar -z`: Comprimirlo usando gzip automáticamente.
+    - `tar -v` (*Verbose*): mostrar en pantalla lo que hace.
+    - `tar -f` (*File*): indicar el nombre del archivo final.
+    - `tar -t`: listar el contenido interior de un paquete sin abrirlo.
+2. `grep` (_Global Regular Expression Print_): **Busca patrones de texto o palabras específicas dentro del contenido de los archivos**. Si encuentra una coincidencia, *imprime en la pantalla la línea completa que contiene esa palabra*. Es la herramienta de **filtrado de texto** más poderosa del sistema.
+3. `gzip` (_GNU zip_): Es un programa de *compresión de datos* sin pérdida. Reduce drásticamente el espacio que ocupa un archivo en el disco. Al ejecutarse sobre un archivo, lo comprime y le añade la extensión `.gz`, eliminando el archivo original sin comprimir. **Se descomprime con el comando** `gunzip`.
+4. `zgrep`: **Combina la funcionalidad de `grep` y `gzip`**. Permite *buscar palabras y patrones de texto directamente dentro de archivos que están comprimidos* (los `.gz`), sin que el usuario tenga que molestarse en descomprimir el archivo primero en el disco duro.
+5. `wc` (_Word Count_): Analiza un archivo de texto y devuelve estadísticas sobre su contenido. Por defecto, imprime tres números: la cantidad total de líneas, la cantidad de palabras, y la cantidad de caracteres/bytes.
+    - `wc -l` (*line*): puede filtrar usando solo líneas.
+    - `wc -w` (*word*): puede filtrar usando solo palabras.
+    - `wc -c`: puede filtrar usando solo bytes.
+
+
+### 18. Indique qué acción realiza cada uno de los comandos indicados a continuación considerando su orden. Suponga que se ejecutan desde un usuario que no es root ni pertenece al grupo de root. (Asuma que se encuentra posicionado en el directorio de trabajo del usuario con el que se logueó). En caso de no poder ejecutarse el comando, indique la razón:  
+ 
+1. `ls −l > prueba`: guarda en `prueba` el contenido detallado del directorio `/home/usuario`, creando o sobreescribiendo el archivo.
+2. `ps > PRUEBA`: guarda en `PRUEBA` la lista de procesos actuales, creando o sobreescribiendo el archivo.
+3. `chmod 710 prueba`: le otorga permisos de RWX(7) al `usuario` y solo permisos de solo X(1) para el grupo al que pertenece
+4. `chown root:root PRUEBA`: no puede ejecutarse, como usuario normal, no se puede regalar la propiedad de un archivo a otro usuario, ni siquiera a `root`.
+5. `chmod 777 PRUEBA`: le otorga permisos de RWX(7) al `usuario`, al Grupo al que pertenece y a Otros para `PRUEBA`.
+5. `chmod 700 /etc/passwd`: no puede ejecutarse, solo el dueño de un archivo (o `root`) puede cambiar sus permisos usando `chmod`. El dueño de `/etc/passwd` es `root`, así que la terminal daría *Operación no permitida*.
+6. `passwd root`: no puede ejecutarse, se necesitan permisos sudo para cambiar la contraseña de otro usuario.
+7. `rm PRUEBA`: borra el archivo `PRUEBA`.
+8. `man /etc/shadow`: no puede ejecutarse, se necesitan permisos de R(4) para acceder a leer `/etc/shadow`.
+9. `find / −name ∗ .conf`: no puede ejecutarse, el `*` está separado del `.conf`.
+10. `usermod root −d /home/ newroot −L`: no puede ejecutarse, falla por falta de privilegios para usar `usermod` y por error de sintaxis con `/home/ newroot`, ya que debería estar sin espacios.
+11. `cd / root`: no puede ejecutarse, demasiados parametros para `cd` al estar separados por un espacio.
+12. `rm ∗`: borra todos los archivos del directorio de trabajo del usuario.
+13. `cd / etc`: no puede ejecutarse, demasiados parametros para `cd`
+14. `cp ∗ /home −R`: no puede ejecutarse por dos motivos: no hay nada para copiar porque se borró todo con `rm *` y porque no tenemos permisos para escritura sobre el directorio `/home`, solo sobre el `/home/usuario`.
+15. `shutdown`: no puede ejecutarse porque apagar el sistema afecta a todos los usuarios conectados, por lo que es una orden reservada estrictamente para superusuarios o `root`.
+
+
+### 19. Indique qué comando sería necesario ejecutar para realizar cada una de las siguientes acciones:  
+1. Terminar el proceso con PID 23: `kill 23`
+2. Terminar el proceso llamado `init` o `systemd`. ¿Qué resultados obtuvo?: `killall systemd` (aunque esto necesita ser ejecutado desde el usuario `root` y aún así provocaría un *Kernel Panic*)
+3. Buscar todos los archivos de usuarios en los que su nombre contiene la cadena “.conf”:  `find /home -name "*.conf"` 
+4. Guardar una lista de procesos en ejecución el archivo `/home/nombre de usuario/procesos`: `ps -aux > ~/procesos`
+5. Cambiar los permisos del archivo `/home/nombre de usuario/xxxx` a:    
+    a. Usuario: Lectura, escritura, ejecución     
+    b. Grupo: Lectura, ejecución      
+    c. Otros: ejecución   
+    `chmod 751 ~/xxxx`
+6. Cambiar los permisos del archivo `/home/nombre de usuario/yyyy` a:  
+    a. Usuario: Lectura, escritura.  
+    b. Grupo: Lectura, ejecución  
+    c. Otros: Ninguno  
+    `chmod 650 ~/yyyy`
+7. Borrar todos los archivos del directorio `/tmp`: `sudo rm -rf /tmp/*`
+8. Cambiar el propietario del archivo `/opt/isodata` al usuario isocso: `sudo chown isocso /opt/isodata`
+9. Guardar en el archivo `/home/nombre de usuario/donde` el directorio donde me encuentro en este momento, en caso de que el archivo exista no se debe eliminar su contenido anterior: `pwd >> ~/donde`
+
+
+### 20. Indique qué comando sería necesario ejecutar para realizar cada una de las siguientes acciones:  
+#### 1. Ingrese al sistema como usuario “root”  
+`su -`
+#### 2. Cree un usuario. Elija como nombre, por convención, la primera letra de su nombre seguida de su apellido. Asígnele una contraseña de acceso. 
+`useradd -m -d /home/mchamorro mchamorro` y `passwd mchamorro`
+#### 3. ¿Qué archivos fueron modificados luego de crear el usuario y qué directorios se crearon? 
+se modificaron `/etc/passwd`, `/etc/shadow`, `/etc/group` y `/etc/gshadow`, y se creó `/home/mchamorro`
+#### 4. Crear un directorio en /tmp llamado miCursada  
+`mkdir /tmp/miCursada`
+#### 5. Copiar todos los archivos de /var/log al directorio antes creado. 
+`sudo cp -r /var/log/* /tmp/miCursada`
+#### 6. Para el directorio antes creado (y los archivos y subdirectorios contenidos en él) cambiar el propietario y grupo al usuario creado y grupo users.  
+`sudo chown -R mchamorro:users /tmp/miCursada`
+#### 7. Agregue permiso total al dueño, de escritura al grupo y escritura y ejecución a todos los demás usuarios para todos los archivos dentro de un directorio en forma recursiva.  
+`chmod -R 723 /tmp/miCursada`
+#### 8. Acceda a otra terminal para loguearse con el usuario antes creado. 
+`su - mchamorro`
+#### 9. Una vez logueado con el usuario antes creado, averigüe cuál es el nombre de su terminal.  
+`tty`(devuelve `/dev/pts/1`)
+#### 10. Verifique la cantidad de procesos activos que hay en el sistema.  
+`ps -aux | wc -l` (*lines*)
+#### 11. Verifique la cantidad de usuarios conectados al sistema.  
+`who -q` (*quantity*)
+#### 12. Vuelva a la terminal del usuario root y envíele un mensaje al usuario anteriormente creado enviándole que el sistema va a ser apagado.  
+`wall "el sistema va a ser apagado"`
+#### 13. Apague el sistema. 
+`shutdown now`
