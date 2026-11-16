@@ -30,7 +30,7 @@
 3. Round Robin con quantum = 1
 4. Round Robin con quantum = 6
 #### 2. Para cada algoritmo calcule el TR y TE para cada job así como el TPR y el TPE.
-![Dibujo de los diagramas FCFS, SJF y Round Robin (usando quantum 1 y quantum 6) (punto3.jpg)](<Resoluciones\Diagramas\punto3.jpg>)
+![Dibujo de los diagramas FCFS, SJF y Round Robin (usando quantum 1 y quantum 6) (punto3.jpg)](<Diagramas\punto3.jpg>)
 #### 3. En base a los tiempos calculados compare los diferentes algoritmos.
 El algoritmo SJF es el mejor en esta ocasión, esto es ya que prioriza intentar resolver los jobs 3, 4 y 5 lo más rápido posible, debido a que son tareas que requieren poco tiempo de CPU, contrario al job 2 que es el más largo.
 #### 4. En el algoritmo Round Robin, qué conclusión se puede sacar con respecto al valor del quantum.

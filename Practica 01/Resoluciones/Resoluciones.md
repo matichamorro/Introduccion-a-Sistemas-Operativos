@@ -1,4 +1,4 @@
-### 11. # Práctica 01
+# Práctica 01
 
 ### Índice
 1. [Características de GNU/Linux](#1-Características-de-GNU/Linux)
@@ -29,10 +29,6 @@
 24. []() 
 
 
-¿Es posible tener en una PC GNU/Linux y otro Sistema Operativo instalado?
-Indique qué comando es necesario utilizar para realizar cada una de las siguientes acciones
-
-
 
 ### 1. Características de GNU/Linux: 
 #### 1. Mencione y explique las características más relevantes de GNU/Linux.  
@@ -46,7 +42,13 @@ Para sumar a las diferencias, Unix usa un jerarquía de procesos en forma de ár
 Por otro lado, NT usa un diseño de microkernel multihilo, en él los procesos son independientes y se administran los recursos asignando tiempo a los hilos de manera directa.
 
 #### 3. ¿Qué es GNU?  
-El sistema GNU fue creado por Richard Stallman con el **fin de crear un Unix libre**. Este define **cuatro libertades** que el sistema tuvo desde el principio como objetivo: la de usar el programa con cualquier propósito, la de estudiar su funcionamiento, la de distribuir sus copias y la de mejorar los programas. Sus siglas significan "GNU no es Unix", esto es debido a que tiene un diseño compatible con el sistema Unix, pero no contiene código de este.
+El sistema GNU fue creado por Richard Stallman con el **fin de crear un Unix libre**. Este define **cuatro libertades** que el sistema tuvo desde el principio como objetivo: 
+1. la libertad de usar el programa con cualquier propósito.
+2. la libertad de estudiar su funcionamiento.
+3. la libertad de distribuir sus copias.
+4. la libertad de mejorar los programas.   
+
+Sus siglas significan "GNU no es Unix", esto es debido a que tiene un diseño compatible con el sistema Unix, pero no contiene código de este.
 
 #### 4. Indique una breve historia sobre la evolución del proyecto GNU. 
 En 1983 Richard Stallman creó el sistema GNU, pero para asegurar que el mismo fuera libre, debió de crear un marco legal conocido como GPL (General Public License de GNU). En 1985, Stallman creó la FSF (Free Softwore Fondation) con el fin de financiar el proyecto GNU. Para 1990, GNU contaba con un editor de texto (Emacs), un compilador y una gran cantidad de bibliotecas, pero aún le faltaba un Kernel, ya que el prototipo Trix fue abandonado en 1988 por correr unicamente en hardware muy costoso. Desde 1991, Linus Torvalds venía trabajando en un Kernel llamado Linux, el cual distribuiría bajo una licencia GPL. Es por esto que, en el año 1992, Torvalds y Stallman deciden fusionar ambos prayectos, dando lugar a lo que hoy se conoce como GNU/Linux.
